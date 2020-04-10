@@ -19,19 +19,19 @@ const turn = document.querySelector('.turn');
 turn.innerHTML = 'A' + '\'s turn!';
 
 
-const changeTurn = () => {
+function changeTurn() {
   currentPlayer = currentPlayer === 'A' ? 'B' : 'A'
 }
 
 
-const StateGameCondition = (clickedCell, clickedCellIndex)  => {
+function StateGameCondition(clickedCell, clickedCellIndex) {
   cellPlayerState[clickedCellIndex] = currentPlayer
 
   currentPlayer === 'A' ? clickedCell.innerHTML = 'o' : clickedCell.innerHTML = 'x';
 }
 
 
-const checkWinnerExists = (currentPlayer) => {
+function checkWinnerExists(currentPlayer) {
   return winConditions.some(winCondition => {
     return winCondition.every(cellIndex => {
       return cellPlayerState[cellIndex] === currentPlayer;
@@ -40,13 +40,14 @@ const checkWinnerExists = (currentPlayer) => {
 }
 
 
-const checkDraw = () => {
+function checkDraw() {
   return cellPlayerState.every(cellValue => {
     return cellValue !== '';
   })
 }
 
-const clickCell = (e) => {
+
+function clickCell(e) {
   if (isFinished) return;
 
   turn.innerHTML = currentPlayer + '\'s turn!';
@@ -79,7 +80,7 @@ const clickCell = (e) => {
 }
 
 
-const startGame = () => {
+function startGame() {
   const cells = document.querySelectorAll('.cell');
   cells.forEach(cell => {
     cell.addEventListener('click', clickCell, {once: true})
@@ -87,14 +88,14 @@ const startGame = () => {
 }
 
 
-const displayRestartButton = () => {
+function displayRestartButton() {
   const newGameButton = document.querySelector('.restart');
   newGameButton.innerHTML = 'New Game';
   newGameButton.addEventListener('click', restart);
 }
 
 
-const restart = () => {
+function restart() {
   const cells = document.querySelectorAll('.cell');
   cells.forEach(cell => {
     cell.innerHTML = '';
