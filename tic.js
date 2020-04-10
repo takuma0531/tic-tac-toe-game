@@ -15,6 +15,9 @@ const winConditions = [
 ];
 
 
+const turn = document.querySelector('.turn');
+turn.innerHTML = 'A' + '\'s turn!';
+
 
 const changeTurn = () => {
   currentPlayer = currentPlayer === 'A' ? 'B' : 'A'
@@ -44,36 +47,73 @@ const checkDraw = () => {
 }
 
 const clickCell = (e) => {
+  if (isFinished) return;
+
+  turn.innerHTML = currentPlayer + '\'s turn!';
 
   const clickedCell = e.target;
   const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
   StateGameCondition(clickedCell, clickedCellIndex)
 
-  // win or draw?
+  // win pattern
   if (checkWinnerExists(currentPlayer)) {
     const result = document.querySelector('.result');
     result.innerHTML = currentPlayer + ' wins!';
     isFinished = true;
+    displayRestartButton();
     return;
   }
 
+  // draw pattern
   if (checkDraw()) {
     const result = document.querySelector('.result');
     result.innerHTML = 'draw!';
     isFinished = true;
+    displayRestartButton();
     return;
   }
 
   changeTurn();
+
+}
+
+
+const startGame = () => {
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell => {
+    cell.addEventListener('click', clickCell, {once: true})
+  });
+}
+
+
+const displayRestartButton = () => {
+  const newGameButton = document.querySelector('.restart');
+  newGameButton.innerHTML = 'New Game';
+  newGameButton.addEventListener('click', restart);
 }
 
 
 const restart = () => {
-  // restart game
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell => {
+    cell.innerHTML = '';
+    startGame();
+  });
+
+  // delete the game result from the screen
+  const result = document.querySelector('.result');
+  result.innerHTML = '';
+
+  // delete new game button from the screen
+  const newGameButton = document.querySelector('.restart');
+  newGameButton.innerHTML = '';
+
+  // init data state
+  cellPlayerState = ['', '', '', '', '', '', '', '', ''];
+  currentPlayer = 'A';
+  isFinished = false;
+
 }
 
-const cells = document.querySelectorAll('.cell');
-cells.forEach(cell => {
-  cell.addEventListener('click', clickCell, {once: true})
-});
+startGame();
