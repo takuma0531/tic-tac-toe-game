@@ -91,6 +91,7 @@ function startGame() {
 function displayRestartButton() {
   const newGameButton = document.querySelector('.restart');
   newGameButton.innerHTML = 'New Game';
+  newGameButton.style.border = '1px solid black';
   newGameButton.addEventListener('click', restart);
 }
 
@@ -109,6 +110,7 @@ function restart() {
   // delete new game button from the screen
   const newGameButton = document.querySelector('.restart');
   newGameButton.innerHTML = '';
+  newGameButton.style.border = '';
 
   // init data state
   cellPlayerState = ['', '', '', '', '', '', '', '', ''];
