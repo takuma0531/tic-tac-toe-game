@@ -92,6 +92,7 @@ function displayRestartButton() {
   const newGameButton = document.querySelector('.restart');
   newGameButton.innerHTML = 'New Game';
   newGameButton.style.border = '1px solid black';
+  newGameButton.style.background = '#f3f3f3'
   newGameButton.addEventListener('click', restart);
 }
 
@@ -110,7 +111,8 @@ function restart() {
   // delete new game button from the screen
   const newGameButton = document.querySelector('.restart');
   newGameButton.innerHTML = '';
-  newGameButton.style.border = '';
+  newGameButton.style.border = 'none';
+  newGameButton.style.background = 'white';
 
   // init data state
   cellPlayerState = ['', '', '', '', '', '', '', '', ''];
