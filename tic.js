@@ -1,5 +1,5 @@
 // game state
-let cellState = ['', '', '', '', '', '', '', '', ''];
+let cellPlayerState = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'A';
 let isFinished = false;
 
@@ -15,16 +15,27 @@ const winConditions = [
 ];
 
 
-changeTurn = () => {
+
+const changeTurn = () => {
   currentPlayer = currentPlayer === 'A' ? 'B' : 'A'
 }
 
-StateGameCondition = (clickedCell, clickedCellIndex)  => {
-  cellState[clickedCellIndex] = currentPlayer;
+
+const StateGameCondition = (clickedCell, clickedCellIndex)  => {
+  cellPlayerState[clickedCellIndex] = currentPlayer
 
   currentPlayer === 'A' ? clickedCell.innerHTML = 'o' : clickedCell.innerHTML = 'x';
-  console.log(cellState)
 }
+
+
+const checkWinnerExists = (currentPlayer) => {
+  return winConditions.some(winCondition => {
+    return winCondition.every(cellIndex => {
+      return cellPlayerState[cellIndex] === currentPlayer;
+    });
+  });
+}
+
 
 const clickCell = (e) => {
 
@@ -32,6 +43,18 @@ const clickCell = (e) => {
   const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
   StateGameCondition(clickedCell, clickedCellIndex)
+
+  // win or draw?
+  if (checkWinnerExists(currentPlayer)) {
+    // winner displayed and game ends
+    console.log('winner exists')
+    return;
+  }
+
+  // if (checkDraw()) {
+  //   // draw and game ends
+  //   return;
+  // }
 
   changeTurn();
 }
