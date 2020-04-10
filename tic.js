@@ -37,6 +37,12 @@ const checkWinnerExists = (currentPlayer) => {
 }
 
 
+const checkDraw = () => {
+  return cellPlayerState.every(cellValue => {
+    return cellValue !== '';
+  })
+}
+
 const clickCell = (e) => {
 
   const clickedCell = e.target;
@@ -46,17 +52,25 @@ const clickCell = (e) => {
 
   // win or draw?
   if (checkWinnerExists(currentPlayer)) {
-    // winner displayed and game ends
-    console.log('winner exists')
+    const result = document.querySelector('.result');
+    result.innerHTML = currentPlayer + ' wins!';
+    isFinished = true;
     return;
   }
 
-  // if (checkDraw()) {
-  //   // draw and game ends
-  //   return;
-  // }
+  if (checkDraw()) {
+    const result = document.querySelector('.result');
+    result.innerHTML = 'draw!';
+    isFinished = true;
+    return;
+  }
 
   changeTurn();
+}
+
+
+const restart = () => {
+  // restart game
 }
 
 const cells = document.querySelectorAll('.cell');
